@@ -5,20 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ad188fac-7509-4876-933d-1da9accbb752" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/GetTourTrip.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/Providers/GetProviderPatients.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Enum/MeetingStatusEnum.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b35bf01c-8c7c-4c8f-a203-551232a0568c.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b35bf01c-8c7c-4c8f-a203-551232a0568c.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/b35bf01c-8c7c-4c8f-a203-551232a0568c/storage_v2/_src_/database/hackaton.8x-47Q/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/b35bf01c-8c7c-4c8f-a203-551232a0568c/storage_v2/_src_/database/hackaton.8x-47Q/schema/public.abK9xQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +142,7 @@
       <option name="presentableId" value="Default" />
       <updated>1685954612383</updated>
       <workItem from="1685954613418" duration="5296000" />
-      <workItem from="1685967410856" duration="9226000" />
+      <workItem from="1685967410856" duration="9673000" />
     </task>
     <servers />
   </component>

@@ -6,6 +6,8 @@ stop:
 
 install:
 	composer install
+	db
+	start
 
 reset:
 	make stop
