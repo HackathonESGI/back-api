@@ -15,8 +15,7 @@ class GetTourPatients
     public function __construct(
         private readonly TourRepository $tourRepository,
         private readonly SerializerInterface $serializer
-    )
-    {
+    ) {
     }
 
     public function __invoke(Tour $tour): Response

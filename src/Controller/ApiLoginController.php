@@ -14,8 +14,7 @@ class ApiLoginController extends AbstractController
 {
     public function __construct(
         protected readonly TokenGeneratorInterface $tokenGenerator
-    )
-    {
+    ) {
     }
 
     #[Route('/api/login', name: 'api_login')]
