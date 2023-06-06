@@ -27,17 +27,26 @@ use Doctrine\ORM\Mapping as ORM;
         ),
         new Post(),
         new Patch(),
-        new Delete()
+        new Delete(),
     ]
 )]
 class Provider extends User
 {
+    /**
+     * @var Collection<int, Patient>
+     */
     #[ORM\ManyToMany(targetEntity: Patient::class, mappedBy: 'Providers')]
     private Collection $patients;
 
+    /**
+     * @var Collection<int, Group>
+     */
     #[ORM\ManyToMany(targetEntity: Group::class, inversedBy: 'providers')]
     private Collection $groups;
 
+    /**
+     * @var Collection<int, Tour>
+     */
     #[ORM\OneToMany(mappedBy: 'provider', targetEntity: Tour::class)]
     private Collection $tours;
 

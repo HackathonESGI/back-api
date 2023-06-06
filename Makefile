@@ -33,3 +33,21 @@ entity:
 
 password:
 	symfony console security:hash-password
+
+phpcs-fix:
+	vendor/bin/php-cs-fixer fix
+
+phpcs-check:
+	vendor/bin/php-cs-fixer fix --dry-run --diff
+
+phpstan:
+	vendor/bin/phpstan analyse
+
+phpunit:
+	vendor/bin/phpunit
+
+validate:
+	symfony console doctrine:schema:validate
+	make phpcs-check
+	make phpstan
+	make phpunit

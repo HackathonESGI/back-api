@@ -11,8 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ApiResource]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\InheritanceType('JOINED')]
-#[ORM\DiscriminatorMap(['user' => User::class, 'patient' => Patient::class, 'provider' =>
-    Provider::class])]
+#[ORM\DiscriminatorMap(['user' => User::class, 'patient' => Patient::class, 'provider' => Provider::class])]
 #[ORM\Table(name: '`user`')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -24,11 +23,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
 
+    /**
+     * @var string[]
+     */
     #[ORM\Column]
     private array $roles = [];
 
     #[ORM\Column]
-    private ?string $password = null;
+    private string $password;
 
     #[ORM\Column(length: 255)]
     private ?string $firstname = null;
@@ -78,6 +80,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param string[] $roles
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;

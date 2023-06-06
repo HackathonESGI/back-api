@@ -26,6 +26,9 @@ class MeetingCategory implements \JsonSerializable
     #[ORM\Column(length: 255)]
     private ?string $color = null;
 
+    /**
+     * @var Collection<int, Meeting>
+     */
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Meeting::class)]
     private Collection $meetings;
 
@@ -105,6 +108,9 @@ class MeetingCategory implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return get_object_vars($this);

@@ -18,7 +18,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TourRepository::class)]
 #[ApiResource(
@@ -41,7 +40,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new Post(),
         new Patch(),
         new Delete(),
-        new Put()
+        new Put(),
     ],
 )]
 #[ORM\UniqueConstraint(
@@ -61,6 +60,9 @@ class Tour implements \JsonSerializable
     #[ORM\ManyToOne(inversedBy: 'tours')]
     private ?Provider $provider = null;
 
+    /**
+     * @var Collection<int, Meeting>
+     */
     #[ORM\OneToMany(mappedBy: 'tour', targetEntity: Meeting::class, fetch: 'EAGER')]
     private Collection $meetings;
 
@@ -128,6 +130,9 @@ class Tour implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return get_object_vars($this);

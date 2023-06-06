@@ -18,6 +18,7 @@ class GetTourMeetings
     public function __invoke(Tour $tour): Response
     {
         $meetings = $tour->getMeetings()->toArray();
+
         return new JsonResponse($this->serializer->serialize($meetings, 'json'), Response::HTTP_OK, [], true);
     }
 }

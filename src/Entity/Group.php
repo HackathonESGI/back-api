@@ -25,6 +25,9 @@ class Group
     #[ORM\Column(length: 255)]
     private ?string $label = null;
 
+    /**
+     * @var Collection<int, Provider>
+     */
     #[ORM\ManyToMany(targetEntity: Provider::class, mappedBy: 'groups')]
     private Collection $providers;
 

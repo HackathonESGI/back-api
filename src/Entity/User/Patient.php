@@ -20,6 +20,9 @@ class Patient extends User
     #[ORM\Column]
     private ?float $long = null;
 
+    /**
+     * @var string[]
+     */
     #[ORM\Column(type: Types::JSON, nullable: true)]
     private array $pathologies = [];
 
@@ -29,9 +32,15 @@ class Patient extends User
     #[ORM\Column(type: Types::BIGINT, nullable: true)]
     private ?string $ameli_id = null;
 
+    /**
+     * @var Collection<int, Provider>
+     */
     #[ORM\ManyToMany(targetEntity: Provider::class, inversedBy: 'patients')]
     private Collection $Providers;
 
+    /**
+     * @var Collection<int, Meeting>
+     */
     #[ORM\OneToMany(mappedBy: 'patient', targetEntity: Meeting::class, fetch: 'EAGER')]
     private Collection $meetings;
 
@@ -73,11 +82,17 @@ class Patient extends User
         return $this;
     }
 
+    /**
+     * @return array<string>
+     */
     public function getPathologies(): array
     {
         return $this->pathologies;
     }
 
+    /**
+     * @param array<string> $pathologies
+     */
     public function setPathologies(array $pathologies): self
     {
         $this->pathologies = $pathologies;

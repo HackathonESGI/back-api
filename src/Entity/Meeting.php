@@ -42,6 +42,9 @@ class Meeting implements \JsonSerializable
     #[ORM\Column(length: 255, enumType: MeetingStatusEnum::class)]
     private ?MeetingStatusEnum $status = null;
 
+    /**
+     * @var Collection<int, MeetingLog>
+     */
     #[ORM\OneToMany(mappedBy: 'meeting', targetEntity: MeetingLog::class)]
     private Collection $meetingLogs;
 
@@ -172,6 +175,9 @@ class Meeting implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return get_object_vars($this);

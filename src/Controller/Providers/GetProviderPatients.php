@@ -16,6 +16,7 @@ class GetProviderPatients
     public function __invoke(Provider $provider): Response
     {
         $patients = $provider->getPatients()->toArray();
+
         return new JsonResponse($this->serializer->serialize($patients, 'json'), Response::HTTP_OK, [], true);
     }
 }

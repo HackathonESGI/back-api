@@ -21,6 +21,7 @@ class GetTourPatients
     public function __invoke(Tour $tour): Response
     {
         $patients = $this->tourRepository->getTourPatients($tour);
+
         return new JsonResponse($this->serializer->serialize($patients, 'json'), Response::HTTP_OK, [], true);
     }
 }
