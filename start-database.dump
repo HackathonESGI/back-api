@@ -1,0 +1,42 @@
+\set adminId = 1;
+\set patientId = 2;
+\set providerId = 3;
+
+INSERT INTO "user"
+    (id, email, roles, password, firstname, lastname, mobile_phone, dtype)
+VALUES (:adminId, 'admin@admin.com', '["ROLE_ADMIN"]',
+        '$2y$13$JaZ9HDAQ6kwzk1iNztWxQOWk03OSlgot9shw1cjL6s170R6SofFaC', 'admin', 'admin',
+        '123456789', 'user');
+
+INSERT INTO "user"
+    (id, email, roles, password, firstname, lastname, mobile_phone, dtype)
+VALUES (:patientId, 'patient@phalanger.com', '["ROLE_PATIENT"]',
+        '$2y$13$JaZ9HDAQ6kwzk1iNztWxQOWk03OSlgot9shw1cjL6s170R6SofFaC', 'patient', 'patient',
+        '123456789', 'patient');
+
+INSERT INTO patient
+    (id, lat, long, pathologies, ameli_id)
+VALUES (:patientId, 48.856614, 2.3522219, '["diabetes", "cancer"]', '123456789');
+
+INSERT INTO "user"
+    (id, email, roles, password, firstname, lastname, mobile_phone, dtype)
+VALUES (:providerId, 'provider@provider.com', '["ROLE_PROVIDER"]',
+        '$2y$13$JaZ9HDAQ6kwzk1iNztWxQOWk03OSlgot9shw1cjL6s170R6SofFaC', 'provider', 'provider',
+        '123456789', 'provider');
+
+INSERT INTO provider (id) VALUES (:providerId);
+
+INSERT INTO "group" (id, slug, label) VALUES (1, 'kinesie', 'Kinésie');
+
+INSERT INTO provider_group (provider_id, group_id) VALUES (:providerId, 1);
+
+INSERT INTO patient_provider (patient_id, provider_id) VALUES (:patientId, :providerId);
+
+INSERT INTO tour (id, provider_id, date) VALUES (1, :providerId, '2023-06-06');
+
+INSERT INTO meeting_category (id, slug, label, color)
+VALUES (1, 'important', 'Important', '#eb4034');
+
+INSERT INTO meeting
+    (id, patient_id, tour_id, starting_date, ending_date, notes, status, category_id)
+VALUES (2, :patientId, 1, '2023-06-06 12:00:00', '2023-06-06 12:30:00', '', 'CONFIRMED', 1);
