@@ -32,7 +32,7 @@ class Patient extends User
     #[ORM\ManyToMany(targetEntity: Provider::class, inversedBy: 'patients')]
     private Collection $Providers;
 
-    #[ORM\OneToMany(mappedBy: 'patient', targetEntity: Meeting::class)]
+    #[ORM\OneToMany(mappedBy: 'patient', targetEntity: Meeting::class, fetch: 'EAGER')]
     private Collection $meetings;
 
     public function __construct()

@@ -24,10 +24,10 @@ class Meeting implements \JsonSerializable
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'meetings')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'meetings')]
     private ?Patient $patient = null;
 
-    #[ORM\ManyToOne(inversedBy: 'meetings')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'meetings')]
     private ?Tour $tour = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

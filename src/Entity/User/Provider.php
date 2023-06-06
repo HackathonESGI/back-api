@@ -24,12 +24,6 @@ use Doctrine\ORM\Mapping as ORM;
         new GetCollection(
             uriTemplate: '/providers/{id}/patients',
             controller: GetProviderPatients::class,
-            normalizationContext: [
-                'groups' => ['patient:read']
-            ],
-            denormalizationContext: [
-                'groups' => ['patient:write']
-            ]
         ),
         new Post(),
         new Patch(),

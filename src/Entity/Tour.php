@@ -32,18 +32,17 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new GetCollection(
             uriTemplate: '/tours/{id}/meetings',
             controller: GetTourMeetings::class,
-            deserialize: false
         ),
         new GetCollection(
             uriTemplate: '/tours/{id}/patients',
             controller: GetTourPatients::class,
+            serialize: true
         ),
         new Post(),
         new Patch(),
         new Delete(),
         new Put()
     ],
-    normalizationContext: ['groups' => ['tour:read']],
 )]
 #[ORM\UniqueConstraint(
     name: 'unique_provider_tour',
@@ -62,7 +61,7 @@ class Tour implements \JsonSerializable
     #[ORM\ManyToOne(inversedBy: 'tours')]
     private ?Provider $provider = null;
 
-    #[ORM\OneToMany(mappedBy: 'tour', targetEntity: Meeting::class)]
+    #[ORM\OneToMany(mappedBy: 'tour', targetEntity: Meeting::class, fetch: 'EAGER')]
     private Collection $meetings;
 
     public function __construct()

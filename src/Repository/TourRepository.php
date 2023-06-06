@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Tour;
 use App\Entity\User\Patient;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 
 class TourRepository extends ServiceEntityRepository
@@ -16,13 +17,13 @@ class TourRepository extends ServiceEntityRepository
 
     /**
      * @param Tour $tour
-     * @return array<Patient>
+     * @return ArrayCollection
      */
-    public function getTourPatients(Tour $tour): array
+    public function getTourPatients(Tour $tour): ArrayCollection
     {
-        $patients = [];
+        $patients = new ArrayCollection();
         foreach ($tour->getMeetings() as $meeting) {
-            $patients[] = $meeting->getPatient();
+            $patients->add($meeting->getPatient());
         }
 
         return $patients;

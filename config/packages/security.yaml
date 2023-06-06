@@ -15,7 +15,6 @@ security:
             pattern: ^/api$
             security: false
         api:
-            lazy: true
             pattern: ^/api
             json_login:
                 # api_login is a route we will create below
