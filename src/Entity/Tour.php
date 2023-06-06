@@ -9,6 +9,8 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
+use App\Controller\Tour\GetTourMeetings;
+use App\Controller\Tour\GetTourPatients;
 use App\Controller\Tour\GetTourTrip;
 use App\Entity\User\Provider;
 use App\Repository\TourRepository;
@@ -16,23 +18,38 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: TourRepository::class)]
 #[ApiResource(
     operations: [
         new Get(),
+        new GetCollection(),
         new GetCollection(
             uriTemplate: '/tours/{id}/trip',
             controller: GetTourTrip::class,
         ),
-        new GetCollection(),
+        new GetCollection(
+            uriTemplate: '/tours/{id}/meetings',
+            controller: GetTourMeetings::class,
+            deserialize: false
+        ),
+        new GetCollection(
+            uriTemplate: '/tours/{id}/patients',
+            controller: GetTourPatients::class,
+        ),
         new Post(),
         new Patch(),
         new Delete(),
         new Put()
-    ]
+    ],
+    normalizationContext: ['groups' => ['tour:read']],
 )]
-class Tour
+#[ORM\UniqueConstraint(
+    name: 'unique_provider_tour',
+    columns: ['provider_id', 'date']
+)]
+class Tour implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -110,5 +127,10 @@ class Tour
         }
 
         return $this;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return get_object_vars($this);
     }
 }

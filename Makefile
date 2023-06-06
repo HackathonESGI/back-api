@@ -21,8 +21,8 @@ cc:
 db:
 	symfony console doctrine:database:drop --force
 	symfony console doctrine:database:create
+	symfony console make:migration
 	symfony console doctrine:migrations:migrate --no-interaction
-	symfony console doctrine:fixtures:load --no-interaction
 
 migration:
 	symfony console make:migration
@@ -33,3 +33,6 @@ fixtures:
 
 entity:
 	symfony console make:entity
+
+password:
+	symfony console security:hash-password

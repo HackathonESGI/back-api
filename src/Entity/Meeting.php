@@ -13,7 +13,11 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MeetingRepository::class)]
 #[ApiResource]
-class Meeting
+#[ORM\UniqueConstraint(
+    name: 'unique_patient_meeting',
+    columns: ['patient_id', 'tour_id', 'starting_date', 'ending_date']
+)]
+class Meeting implements \JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -36,10 +40,13 @@ class Meeting
     private ?string $notes = null;
 
     #[ORM\Column(length: 255, enumType: MeetingStatusEnum::class)]
-    private ?string $status = null;
+    private ?MeetingStatusEnum $status = null;
 
     #[ORM\OneToMany(mappedBy: 'meeting', targetEntity: MeetingLog::class)]
     private Collection $meetingLogs;
+
+    #[ORM\ManyToOne(inversedBy: 'meetings')]
+    private ?MeetingCategory $category = null;
 
     public function __construct()
     {
@@ -111,12 +118,12 @@ class Meeting
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?MeetingStatusEnum
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): self
+    public function setStatus(MeetingStatusEnum $status): self
     {
         $this->status = $status;
 
@@ -151,5 +158,22 @@ class Meeting
         }
 
         return $this;
+    }
+
+    public function getCategory(): ?MeetingCategory
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?MeetingCategory $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return get_object_vars($this);
     }
 }
