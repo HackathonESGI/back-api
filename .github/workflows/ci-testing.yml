@@ -52,4 +52,4 @@ jobs:
     - name: Execute Behat tests
       env:
         DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/test?serverVersion=15&charset=utf8
-      run: vendor/bin/behat
+      run: php vendor/bin/behat --colors --strict --format=progress --no-interaction -vvv
