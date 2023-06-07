@@ -34,6 +34,14 @@ entity:
 password:
 	symfony console security:hash-password
 
+
+### Tests
+
+init-test:
+	symfony console doctrine:database:drop --force --env=test --if-exists
+	symfony console doctrine:database:create --env=test
+	symfony console doctrine:migrations:migrate --no-interaction --env=test
+
 phpcs-fix:
 	vendor/bin/php-cs-fixer fix
 
@@ -46,8 +54,19 @@ phpstan:
 phpunit:
 	vendor/bin/phpunit
 
+behat:
+	vendor/bin/behat --colors --strict --format=progress --no-interaction -vvv
+
+behat-filter:
+	vendor/bin/behat --tags=$(tags) --colors --strict --format=progress --no-interaction -vvv
+
+test:
+	make init-test
+	make phpunit
+	make behat
+
 validate:
 	symfony console doctrine:schema:validate
 	make phpcs-check
 	make phpstan
-	make phpunit
+	make test

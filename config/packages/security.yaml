@@ -11,17 +11,24 @@ security:
                 property: email
         # used to reload user from session & other features (e.g. switch_user)
     firewalls:
+        login:
+            pattern: ^/api/login
+            stateless: true
+            json_login:
+                check_path: /api/login_check
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
         api_doc:
             pattern: ^/api$
             security: false
         api:
             pattern: ^/api
-            json_login:
-                # api_login is a route we will create below
-                check_path: api_login
+            stateless: true
+            jwt: ~
 
     access_control:
-        - { path: ^/api, roles: ROLE_USER }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
     role_hierarchy:
         ROLE_PATIENT: [ROLE_USER]
         ROLE_PROVIDER: [ROLE_USER]
