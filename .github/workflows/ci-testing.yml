@@ -56,16 +56,11 @@ jobs:
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       id: phpunit
       env:
-        DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/test?serverVersion=15&charset=utf8
+        DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
       run: vendor/bin/phpunit
-
-    - name: Sleep for 10 seconds
-      uses: jakejarvis/wait-action@master
-      with:
-        time: '10s'
 
     - name: Execute Behat tests
       id: behat
       env:
-        DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/test?serverVersion=15&charset=utf8
+        DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
       run: php vendor/bin/behat --colors --strict --format=progress --no-interaction -vvv
