@@ -7,6 +7,7 @@ namespace App\Tests\Behat\Context;
 use App\Entity\User\User;
 use App\Tests\Behat\Service\SharedStorage;
 use Behat\Behat\Context\Context;
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
@@ -46,11 +47,11 @@ class CommonContext implements Context
         $this->uri = $uri;
     }
 
-    /** @Given /^I want to (get|modify|delete) the existing "([^"]*)" resource$/ */
-    public function iWantToGetTheExistingResource(string $arg1, string $resource): void
+    /** @Given /^I want to (get|modify|delete) the (existing|last) "([^"]*)" resource$/ */
+    public function iWantToGetTheExistingResource(string $arg1, string $arg, string $resource): void
     {
         $id = $this->sharedStorage->get(sprintf('%s_id', $resource));
-        TestCase::assertIsString($id);
+        TestCase::assertIsInt($id);
         $this->uri = sprintf('%s/%s', $this->uri, $id);
     }
 

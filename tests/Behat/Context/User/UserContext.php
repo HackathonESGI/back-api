@@ -37,8 +37,8 @@ final class UserContext implements Context
         $this->entityManager->flush();
     }
 
-    /** @Given /^the following (users|providers|patients) exist:$/ */
-    public function theFollowingPatientsExist(string $type, TableNode $table): void
+    /** @Given /^the following (user|provider|patient) exist:$/ */
+    public function theFollowingPatientExist(string $type, TableNode $table): void
     {
         $user = null;
         foreach ($table as $row) {
@@ -49,7 +49,22 @@ final class UserContext implements Context
         $this->entityManager->flush();
 
         TestCase::assertInstanceOf(User::class, $user);
-        $this->sharedStorage->set('user_id', $user->getId());
+        $this->sharedStorage->set($type.'_id', $user->getId());
+    }
+
+    /** @Given /^the (user|patient|provider) with the email "([^"]*)" should exist$/ */
+    public function thePatientWithTheEmailShouldExist(string $type, string $email): void
+    {
+        $class = match ($type) {
+            'patient' => new Patient(),
+            'provider' => new Provider(),
+            default => new User(),
+        };
+        $user = $this->entityManager->getRepository($class::class)->findOneBy(
+            ['email' => $email]
+        );
+
+        TestCase::assertNotNull($user);
     }
 
     private function createUser(
@@ -59,10 +74,10 @@ final class UserContext implements Context
         string $lastname = 'Test'
     ): Provider|User|Patient {
         switch ($type) {
-            case 'providers':
+            case 'provider':
                 $object = new Provider();
                 break;
-            case 'patients':
+            case 'patient':
                 $object = new Patient();
                 $object->setLat(51)
                     ->setLong(69);

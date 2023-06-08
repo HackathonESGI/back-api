@@ -17,7 +17,7 @@ readonly class DatabaseClearer
     {
         $connection = $this->entityManager->getConnection();
         $sql = sprintf(
-            'DELETE FROM "%s"',
+            'TRUNCATE "%s" RESTART IDENTITY CASCADE ',
             $this->entityManager->getClassMetadata($fqcn)->getTableName()
         );
         $stmt = $connection->prepare($sql);
