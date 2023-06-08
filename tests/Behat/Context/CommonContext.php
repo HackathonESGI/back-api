@@ -7,7 +7,6 @@ namespace App\Tests\Behat\Context;
 use App\Entity\User\User;
 use App\Tests\Behat\Service\SharedStorage;
 use Behat\Behat\Context\Context;
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Doctrine\ORM\EntityManagerInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
