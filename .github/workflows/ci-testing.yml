@@ -62,12 +62,8 @@ jobs:
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       id: phpunit
-      env:
-        DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
       run: vendor/bin/phpunit
 
     - name: Execute Behat tests
       id: behat
-      env:
-        DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
       run: php vendor/bin/behat --colors --strict --format=progress --no-interaction -vvv
