@@ -59,9 +59,13 @@ jobs:
         DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/test?serverVersion=15&charset=utf8
       run: vendor/bin/phpunit
 
+    - name: Sleep for 10 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '10s'
+
     - name: Execute Behat tests
       id: behat
-      if: steps.composer-install.outputs.conclusion == 'success'
       env:
         DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/test?serverVersion=15&charset=utf8
       run: php vendor/bin/behat --colors --strict --format=progress --no-interaction -vvv
