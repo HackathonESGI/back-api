@@ -39,13 +39,15 @@ jobs:
       id: composer-install
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-    - name: Create Database
-      id: create-database
-      env:
-        DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
+    - name: Setup PostgreSQL
+      uses: Harmon758/postgresql-action@v1.0.0
+      with:
+        postgresql db: postgres
+        postgresql user: postgres
+        postgresql password: postgres
+    
+    - name: Setup Database
       run: |
-        mkdir -p data
-        touch data/database.sqlite
         php bin/console doctrine:database:drop --force --env=test --if-exists
         php bin/console doctrine:database:create --env=test
         php bin/console doctrine:migrations:migrate --no-interaction --env=test
