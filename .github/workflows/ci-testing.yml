@@ -18,15 +18,14 @@ jobs:
   symfony-tests:
     runs-on: ubuntu-latest
     steps:
-    #  To automatically get bug fixes and new Php versions for shivammathur/setup-php,
-    # change this to (see https://github.com/shivammathur/setup-php#bookmark-versioning):
-    # uses: shivammathur/setup-php@v2
     - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
       with:
         php-version: '8.2'
     - uses: actions/checkout@v3
+
     - name: Copy .env.test.local
       run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
+
     - name: Cache Composer packages
       id: composer-cache
       uses: actions/cache@v3
@@ -35,21 +34,35 @@ jobs:
         key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
           ${{ runner.os }}-php-
+
     - name: Install Dependencies
+      id: composer-install
       run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
     - name: Create Database
+      id: create-database
       run: |
-        mkdir -p data
-        touch data/database.sqlite
-    - name: Execute PHP CS Fixer
+        php bin/console doctrine:database:drop --force --env=test --if-exists
+        php bin/console doctrine:database:create --env=test
+        php bin/console doctrine:migrations:migrate --no-interaction --env=test
+
+    - name: Execute PHP CS Fixer`
+      id: php-cs-fixer
       run: vendor/bin/php-cs-fixer fix --dry-run --diff --verbose
+
     - name: Execute PHPStan
+      id: phpstan
       run: vendor/bin/phpstan analyse
+
     - name: Execute tests (Unit and Feature tests) via PHPUnit
+      id: phpunit
       env:
         DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/test?serverVersion=15&charset=utf8
       run: vendor/bin/phpunit
+
     - name: Execute Behat tests
+      id: behat
+      if: steps.composer-install.outputs.conclusion == 'success'
       env:
         DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/test?serverVersion=15&charset=utf8
       run: php vendor/bin/behat --colors --strict --format=progress --no-interaction -vvv
