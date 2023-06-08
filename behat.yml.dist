@@ -1,0 +1,14 @@
+default:
+    suites:
+        patients:
+            contexts:
+                - App\Tests\Behat\Context\CommonContext:
+                - App\Tests\Behat\Context\User\UserContext:
+            filters:
+                tags: "@patients"
+
+    extensions:
+            FriendsOfBehat\SymfonyExtension:
+                bootstrap: "config/packages/test/behat/bootstrap.php"
+                kernel:
+                    class: App\Kernel
