@@ -1,0 +1,20 @@
+api_platform:
+  defaults:
+    pagination:
+      partial: true
+    pagination_items_per_page: 10
+    url_generation_strategy: !php/const ApiPlatform\Api\UrlGeneratorInterface::ABS_URL
+    normalizationContext:
+      skip_null_values: false
+  resource_class_directories:
+    - '%kernel.project_dir%/src/Entity'
+  patch_formats:
+    json: ['application/merge-patch+json', 'application/ld+json', 'application/json']
+  swagger:
+    versions: [3]
+    api_keys:
+      JWT:
+        name: Authorization
+        type: header
+
+  title: 'hackaton'
