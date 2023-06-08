@@ -44,8 +44,11 @@ jobs:
       run: |
         mkdir -p data
         touch data/database.sqlite
+        php bin/console doctrine:database:drop --force
+        php bin/console doctrine:database:create
+        php bin/console doctrine:migrations:migrate --no-interaction
 
-    - name: Execute PHP CS Fixer`
+    - name: Execute PHP CS Fixer
       id: php-cs-fixer
       run: vendor/bin/php-cs-fixer fix --dry-run --diff --verbose
 
